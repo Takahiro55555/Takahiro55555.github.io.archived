@@ -18,10 +18,18 @@ jobs:
         BRANCH: public
         FOLDER: public
         HUGO_VERSION: 0.57.2
+        NODE_MAJOR_VERSION: 8
         BUILD_SCRIPT: |
+          sudo apt update
+          sudo apt -y upgrade
+          sudo apt install nodejs{NODE_MAJOR_VERSION}
+          sudo atp install npm
+          npm install autoprefixer
+          npm install postcss-cli
           wget https://github.com/gohugoio/hugo/releases/download/v0.62.1/hugo_${HUGO_VERSION}_Linux-64bit.deb
           wget https://github.com/gohugoio/hugo/releases/download/v0.62.1/hugo_extended_${HUGO_VERSION}_Linux-64bit.deb
           dpkg -i hugo_${HUGO_VERSION}_Linux-64bit.deb
           dpkg -i hugo_extended_${HUGO_VERSION}_Linux-64bit.deb
+          
           git submodule update --init
           hugo -v
