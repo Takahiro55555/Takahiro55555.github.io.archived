@@ -17,7 +17,7 @@ jobs:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BRANCH: public
         FOLDER: public
-        HUGO_VERSION: 0.57.2
+        HUGO_VERSION: 0.62.1
         NODE_MAJOR_VERSION: 8
         BUILD_SCRIPT: |
           sudo apt update
