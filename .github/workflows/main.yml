@@ -1,4 +1,4 @@
-name: Make Public
+name: github pages
 
 on:
   push:
@@ -6,30 +6,23 @@ on:
     - master
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest    
+  build-deploy:
+    runs-on: ubuntu-18.04
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
-    - name: Build and Deploy
-      uses: JamesIves/github-pages-deploy-action@master
+    - uses: actions/checkout@v2
+
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: '0.62.1'
+        node-major-version: '8'
+        
+    - name: Build
+      run: hugo --gc --minify --cleanDestinationDir
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v2
       env:
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        BRANCH: public
-        FOLDER: public
-        HUGO_VERSION: 0.62.1
-        NODE_MAJOR_VERSION: 8
-        BUILD_SCRIPT: |
-          sudo apt update
-          sudo apt -y upgrade
-          sudo apt install nodejs{NODE_MAJOR_VERSION}
-          sudo atp install npm
-          npm install autoprefixer
-          npm install postcss-cli
-          wget https://github.com/gohugoio/hugo/releases/download/v0.62.1/hugo_${HUGO_VERSION}_Linux-64bit.deb
-          wget https://github.com/gohugoio/hugo/releases/download/v0.62.1/hugo_extended_${HUGO_VERSION}_Linux-64bit.deb
-          dpkg -i hugo_${HUGO_VERSION}_Linux-64bit.deb
-          dpkg -i hugo_extended_${HUGO_VERSION}_Linux-64bit.deb
-          
-          git submodule update --init
-          hugo -v
+        ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: ./public
