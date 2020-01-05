@@ -9,9 +9,12 @@ jobs:
   build-deploy:
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@v1
-        # with:
-        #   submodules: true
+      - name: Checkoutn
+        uses: actions/checkout@v1
+        with:
+          ref: source
+          submodules: recursive
+
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
@@ -19,7 +22,7 @@ jobs:
           extended: true
 
       - name: Build
-        run: hugo --minify
+        run: hugo --gc --minify --cleanDestinationDir
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v2
