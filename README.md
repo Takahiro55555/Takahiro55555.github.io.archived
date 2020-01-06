@@ -1,6 +1,6 @@
 # Takahiro55555.github.io
 
-![](https://github.com/Takahiro55555/Takahiro55555.github.io/workflows/github%20pages/badge.svg)
+![](https://github.com/Takahiro55555/Takahiro55555.github.io/workflows/Build%20Deploy/badge.svg)
 
 ## これは何？
 自己紹介的なページとブログ（予定）です。
