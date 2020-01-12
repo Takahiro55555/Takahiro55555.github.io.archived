@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Works on Takahiro</title><link>/projects/</link><description>Recent content in Works on Takahiro</description><generator>Hugo -- gohugo.io</generator><language>ja</language><lastBuildDate>Sun, 05 Jan 2020 03:02:08 +0900</lastBuildDate><atom:link href="/projects/index.xml" rel="self" type="application/rss+xml"/><item><title>Ollie</title><link>/projects/ollie/</link><pubDate>Mon, 13 Jan 2020 04:00:05 +0900</pubDate><guid>/projects/ollie/</guid><description>Ollieとは？ 大学祭と、新歓祭で展示した体感型スケートボードゲームです。
 独自に製作したコントローラの上に乗り、ジャンプすることで操作することができます。
 サークルのメンバー3人で製作しました。
-担当した部分 ランキングシステム(GitHub) コントローラ部分</description></item><item><title>ラズパイケース</title><link>/projects/raspi-honeycomb-case/</link><pubDate>Mon, 13 Jan 2020 03:00:00 +0900</pubDate><guid>/projects/raspi-honeycomb-case/</guid><description>これは何？ 自分で、モデリングから3Dプリンタでの出力を行った完全自作のRaspberryPi4専用ケースです。
+担当した部分 ランキングシステム(GitHub) コントローラ部分</description></item><item><title>イベントページ</title><link>/projects/nichinanhack/</link><pubDate>Mon, 13 Jan 2020 04:48:53 +0900</pubDate><guid>/projects/nichinanhack/</guid><description>これは何？ 私が所属するサークルが関わったハッカソンのウェブページです。
+デザインやロゴはサークルのメンバーがAdobe XDやAdobe Illustratorを使用し製作しました。
+一度、静的サイトジェネレータなどを使わずにウェブページを製作してみたかったので、テキストエディタで直接コーディングし製作しました。
+担当した部分 Webページの実装・公開(ウェブページ) 使用したもの Bootstrap4 GoogleAppsScript（宿泊施設申込者数の反映） GitHub Pages（公開用）</description></item><item><title>ラズパイケース</title><link>/projects/raspi-honeycomb-case/</link><pubDate>Mon, 13 Jan 2020 03:00:00 +0900</pubDate><guid>/projects/raspi-honeycomb-case/</guid><description>これは何？ 自分で、モデリングから3Dプリンタでの出力を行った完全自作のRaspberryPi4専用ケースです。
 通気性を確保するために、6角形のメッシュにしました。
 また、コスト削減のためねじの代わりに綿棒で固定できるようになっています。
 USB端子部分のタグも3Dプリンタで出力しました。IPアドレスやホスト名を記載しています。</description></item></channel></rss>
