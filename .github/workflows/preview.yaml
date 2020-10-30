@@ -2,19 +2,13 @@ name: "[TEST] Create preview"
 
 on: [pull_request]
 
-env:
-  PREVIEW_PROTOCOL: "https"
-  COMMON_DOMAIN: ".dot-cube.github.io.preview.moyashi.dev"
-
-
 jobs:
   trigger-webhook:
     runs-on: ubuntu-18.04
       - name: Trigger
         # タイムアウトをとりあえず300秒(5分)に設定
         run: |
-          echo "curl -m 30 ${PREVIEW_PROTOCOL}://hook${COMMON_DOMAIN}/?token=${{ secrets.PREVIEW_HOOK_TOKEN }}&repository=${{ GITHUB_REPOSITORY }}&ref=${{ GITHUB_REF }}&issunumber=${{context.issue.number}}"
-
+          echo 'curl -m 30 https://hook.dot-cube.github.io.preview.moyashi.dev/?token=${{ secrets.PREVIEW_HOOK_TOKEN }}&repository=${{ GITHUB_REPOSITORY }}&ref=${{ GITHUB_REF }}&issunumber=${{ context.issue.number }}'
 
        # 参考：https://qiita.com/osakiy/items/df80db383ce33b82c797#comment-2fa1f29c729216bcfe39
       - name: Trigger and submit comment
@@ -26,5 +20,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: "You can preview here.  \n[${PREVIEW_PROTOCOL}://${{ context.issu.number }}${COMMON_DOMAIN}](${PREVIEW_PROTOCOL}://${{ context.issu.number }}${COMMON_DOMAIN})"
+              body: "You can preview here.  \n[https://${{ context.issue.number }}.dot-cube.github.io.preview.moyashi.dev](https://${{ context.issue.number }}.dot-cube.github.io.preview.moyashi.dev)"
             })
