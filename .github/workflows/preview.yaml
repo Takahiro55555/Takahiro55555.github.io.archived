@@ -6,7 +6,7 @@ jobs:
   trigger-webhook:
     runs-on: ubuntu-18.04
     steps:
-      -name: Set env
+      - name: Set env
         run: | 
           echo "preview_protocol=https" >> $GITHUB_ENV
           echo "common_domain=.dot-cube.github.io.preview.moyashi.dev" >> $GITHUB_ENV
@@ -33,4 +33,3 @@ jobs:
               repo: context.repo.repo,
               body: "You can preview here.\n${{ preview_url }}"
             })
-
