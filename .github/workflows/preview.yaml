@@ -11,7 +11,7 @@ jobs:
           echo ""
           echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
           echo "GITHUB_REF: $GITHUB_REF"
-          echo "github.event.number: $github.event.number"
+          echo "github.event.number: ${{ github.event.number }}"
           echo "  "
 
        # 参考：https://qiita.com/osakiy/items/df80db383ce33b82c797#comment-2fa1f29c729216bcfe39
