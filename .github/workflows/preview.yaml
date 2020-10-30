@@ -6,30 +6,33 @@ jobs:
   trigger-webhook:
     runs-on: ubuntu-18.04
     steps:
-      - name: Set env
-        run: | 
-          echo "preview_protocol=https" >> $GITHUB_ENV
-          echo "common_domain=.dot-cube.github.io.preview.moyashi.dev" >> $GITHUB_ENV
-          echo "ref_branch_name=`echo ${GITHUB_REF} | sed -E 's:/:-:g' | sed -E 's:\.:_:g'`" >> $GITHUB_ENV
-
-    
-
-      - name: Trigger
-        # タイムアウトをとりあえず300秒(5分)に設定
+      - name: Check enviroment valiables
         run: |
-          echo "curl -m 30 https://hook${{ GITHUB_ENV.common_domain }}/?token=${{ secrets.PREVIEW_HOOK_TOKEN }}&repository=${{ GITHUB_REPOSITORY }}&ref={{ GITHUB_REF }}"
-          echo "preview_url=https://${{ context.issue.number }}${{ GITHUB_ENV.common_domain }}" >> $GITHUB_ENV
-
+          echo ""
+          echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
+          echo "GITHUB_REF: $GITHUB_REF"
+          echo "github.event.number: ${{ github.event.number }}"
+          echo "  "
 
        # 参考：https://qiita.com/osakiy/items/df80db383ce33b82c797#comment-2fa1f29c729216bcfe39
-      - name: Submit comment
-        uses: actions/github-script@0.8.0
-        if: github.event.pull_request.opened == true
-        with:
-          script: |
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: "You can preview here.  \n[${{ GITHUB_ENV.preview_url }}](${{ GITHUB_ENV.preview_url }})"
-            })
+      # - name: Trigger and submit comment
+      #   uses: actions/github-script@v3.0.0
+      #   if: github.event.pull_request.opened == true
+      #   with:
+      #     script: |
+      #       github.issues.createComment({
+      #         issue_number: context.issue.number,
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         body: "You can preview here.  \n[https://${{ github.event.number }}.dot-cube.github.io.preview.moyashi.dev](https://${{ github.event.number }}.dot-cube.github.io.preview.moyashi.dev)"
+      #       })
+      # - name: Trigger and submit comment
+      #   run: >
+      #     curl
+      #     -X POST
+      #     -H "Authorization: token $GITHUB_TOKEN"
+      #     -H "Accept: application/vnd.github.v3+json"
+      #     --data "{ \"body\": \"You can preview here.  \n[https://${{ github.event.number }}.dot-cube.github.io.preview.moyashi.dev](https://${{ github.event.number }}.dot-cube.github.io.preview.moyashi.dev)\" }"
+      #     ${{ github.event.pull_request.comments_url }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
