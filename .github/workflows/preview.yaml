@@ -17,8 +17,8 @@ jobs:
       - name: Trigger
         # タイムアウトをとりあえず300秒(5分)に設定
         run: |
-          echo "curl -m 30 https://hook${{ common_domain }}/?token=${{ secrets.PREVIEW_HOOK_TOKEN }}&repository=${{ GITHUB_REPOSITORY }}&ref={{ GITHUB_REF }}"
-          echo "preview_url=https://${{ context.issue.number }}${{ common_domain }}" >> $GITHUB_ENV
+          echo "curl -m 30 https://hook${{ GITHUB_ENV.common_domain }}/?token=${{ secrets.PREVIEW_HOOK_TOKEN }}&repository=${{ GITHUB_REPOSITORY }}&ref={{ GITHUB_REF }}"
+          echo "preview_url=https://${{ context.issue.number }}${{ GITHUB_ENV.common_domain }}" >> $GITHUB_ENV
 
 
        # 参考：https://qiita.com/osakiy/items/df80db383ce33b82c797#comment-2fa1f29c729216bcfe39
@@ -31,5 +31,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: "You can preview here.\n${{ preview_url }}"
+              body: "You can preview here.  \n[${{ GITHUB_ENV.preview_url }}](${{ GITHUB_ENV.preview_url }})"
             })
