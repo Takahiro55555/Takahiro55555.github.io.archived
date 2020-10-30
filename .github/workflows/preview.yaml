@@ -8,6 +8,7 @@ jobs:
     steps:
       - name: Check enviroment valiables
         run: |
+          echo ""
           echo 'GITHUB_REG: ${{ GITHUB_REG }}'
           echo 'GITHUB_REPOSITORY: ${{ GITHUB_REPOSITORY }}'
           echo 'GITHUB_REF: ${{ GITHUB_REF }}'
