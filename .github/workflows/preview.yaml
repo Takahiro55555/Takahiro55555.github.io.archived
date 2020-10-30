@@ -1,28 +1,23 @@
 name: "[TEST] Create preview"
 
-on: [pull_request, push]
+on: [pull_request]
+
+env:
+  PREVIEW_PROTOCOL: "https"
+  COMMON_DOMAIN: ".dot-cube.github.io.preview.moyashi.dev"
+
 
 jobs:
   trigger-webhook:
     runs-on: ubuntu-18.04
-    steps:
-      - name: Set env
-        run: | 
-          echo "preview_protocol=https" >> $GITHUB_ENV
-          echo "common_domain=.dot-cube.github.io.preview.moyashi.dev" >> $GITHUB_ENV
-          echo "ref_branch_name=`echo ${GITHUB_REF} | sed -E 's:/:-:g' | sed -E 's:\.:_:g'`" >> $GITHUB_ENV
-
-    
-
       - name: Trigger
         # タイムアウトをとりあえず300秒(5分)に設定
         run: |
-          echo "curl -m 30 https://hook${{ GITHUB_ENV.common_domain }}/?token=${{ secrets.PREVIEW_HOOK_TOKEN }}&repository=${{ GITHUB_REPOSITORY }}&ref={{ GITHUB_REF }}"
-          echo "preview_url=https://${{ context.issue.number }}${{ GITHUB_ENV.common_domain }}" >> $GITHUB_ENV
+          echo "curl -m 30 ${PREVIEW_PROTOCOL}://hook${COMMON_DOMAIN}/?token=${{ secrets.PREVIEW_HOOK_TOKEN }}&repository=${{ GITHUB_REPOSITORY }}&ref=${{ GITHUB_REF }}&issunumber=${{context.issue.number}}"
 
 
        # 参考：https://qiita.com/osakiy/items/df80db383ce33b82c797#comment-2fa1f29c729216bcfe39
-      - name: Submit comment
+      - name: Trigger and submit comment
         uses: actions/github-script@0.8.0
         if: github.event.pull_request.opened == true
         with:
@@ -31,5 +26,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: "You can preview here.  \n[${{ GITHUB_ENV.preview_url }}](${{ GITHUB_ENV.preview_url }})"
+              body: "You can preview here.  \n[${PREVIEW_PROTOCOL}://${{ context.issu.number }}${COMMON_DOMAIN}](${PREVIEW_PROTOCOL}://${{ context.issu.number }}${COMMON_DOMAIN})"
             })
