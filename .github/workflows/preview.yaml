@@ -11,14 +11,24 @@ jobs:
           echo 'curl -m 30 https://hook.dot-cube.github.io.preview.moyashi.dev/?token=${{ secrets.PREVIEW_HOOK_TOKEN }}&repository=${{ github.event.repository.name }}&ref=${{ GITHUB_REF }}&issunumber=${{ github.event.number }}'
 
        # 参考：https://qiita.com/osakiy/items/df80db383ce33b82c797#comment-2fa1f29c729216bcfe39
+      # - name: Trigger and submit comment
+      #   uses: actions/github-script@v3.0.0
+      #   if: github.event.pull_request.opened == true
+      #   with:
+      #     script: |
+      #       github.issues.createComment({
+      #         issue_number: context.issue.number,
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         body: "You can preview here.  \n[https://${{ github.event.number }}.dot-cube.github.io.preview.moyashi.dev](https://${{ github.event.number }}.dot-cube.github.io.preview.moyashi.dev)"
+      #       })
       - name: Trigger and submit comment
-        uses: actions/github-script@v3.0.0
-        if: github.event.pull_request.opened == true
-        with:
-          script: |
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: "You can preview here.  \n[https://${{ github.event.number }}.dot-cube.github.io.preview.moyashi.dev](https://${{ github.event.number }}.dot-cube.github.io.preview.moyashi.dev)"
-            })
+        run: >
+          curl
+          -X POST
+          -H "Authorization: token $GITHUB_TOKEN"
+          -H "Accept: application/vnd.github.v3+json"
+          --data "{ \"body\": \"You can preview here.  \n[https://${{ github.event.number }}.dot-cube.github.io.preview.moyashi.dev](https://${{ github.event.number }}.dot-cube.github.io.preview.moyashi.dev)\" }"
+          ${{ github.event.pull_request.comments_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
