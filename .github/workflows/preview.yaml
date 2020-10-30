@@ -6,9 +6,12 @@ jobs:
   trigger-webhook:
     runs-on: ubuntu-18.04
     steps:
-      - name: Trigger
+      - name: Check enviroment valiables
         run: |
-          echo 'curl -m 30 https://hook.dot-cube.github.io.preview.moyashi.dev/?token=${{ secrets.PREVIEW_HOOK_TOKEN }}&repository=${{ github.event.repository.name }}&ref=${{ GITHUB_REF }}&issunumber=${{ github.event.number }}'
+          echo 'GITHUB_REG: ${{ GITHUB_REG }}'
+          echo 'GITHUB_REPOSITORY: ${{ GITHUB_REPOSITORY }}'
+          echo 'GITHUB_REF: ${{ GITHUB_REF }}'
+          
 
        # 参考：https://qiita.com/osakiy/items/df80db383ce33b82c797#comment-2fa1f29c729216bcfe39
       # - name: Trigger and submit comment
@@ -22,13 +25,13 @@ jobs:
       #         repo: context.repo.repo,
       #         body: "You can preview here.  \n[https://${{ github.event.number }}.dot-cube.github.io.preview.moyashi.dev](https://${{ github.event.number }}.dot-cube.github.io.preview.moyashi.dev)"
       #       })
-      - name: Trigger and submit comment
-        run: >
-          curl
-          -X POST
-          -H "Authorization: token $GITHUB_TOKEN"
-          -H "Accept: application/vnd.github.v3+json"
-          --data "{ \"body\": \"You can preview here.  \n[https://${{ github.event.number }}.dot-cube.github.io.preview.moyashi.dev](https://${{ github.event.number }}.dot-cube.github.io.preview.moyashi.dev)\" }"
-          ${{ github.event.pull_request.comments_url }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Trigger and submit comment
+      #   run: >
+      #     curl
+      #     -X POST
+      #     -H "Authorization: token $GITHUB_TOKEN"
+      #     -H "Accept: application/vnd.github.v3+json"
+      #     --data "{ \"body\": \"You can preview here.  \n[https://${{ github.event.number }}.dot-cube.github.io.preview.moyashi.dev](https://${{ github.event.number }}.dot-cube.github.io.preview.moyashi.dev)\" }"
+      #     ${{ github.event.pull_request.comments_url }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
